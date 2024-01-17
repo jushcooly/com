@@ -1,0 +1,43 @@
+#include<iostream>
+using namespace std;
+
+typedef long long ll;
+
+
+ll  chk[10];
+
+void fixing(ll n, ll dial)
+{
+    while(n>0)
+    {
+        chk[n%10]+=dial;
+        n/=10;
+    }
+}
+void solve(ll a, ll b, ll dial)
+{
+    while(a%10!=0&&a<=b)
+    {
+        fixing(a,dial);
+        a++;
+    }
+    if(a>b) return;
+    while(b%10!=9&&b>=a)
+    {
+        fixing(b, dial);
+        b--;
+    }
+    ll cnt =(b/10-a/10+1);
+    for(int i =0; i<10; i++)
+    {
+        chk[i]+=cnt*dial;
+    }
+    solve(a/10, b/10, dial*10);
+}
+int main()
+{
+    ll n;
+    cin>>n;
+    solve(1,n,1);
+    for(int i =0; i<10; i++) cout<<chk[i]<<' ';
+}
